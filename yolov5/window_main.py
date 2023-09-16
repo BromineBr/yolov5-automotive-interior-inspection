@@ -19,6 +19,9 @@ from utils.general import (LOGGER, check_file, check_img_size, check_imshow, che
                            increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh)
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, time_sync
+import cv2
+import numpy as np
+from sklearn.cluster import KMeans
 
 
 class MainWindow(QTabWidget):
@@ -220,7 +223,7 @@ class MainWindow(QTabWidget):
         view_img = False  # show results
         save_txt = False  # save results to *.txt
         save_conf = False  # save confidences in --save-txt labels
-        save_crop = False  # save cropped prediction boxes
+        save_crop = True  # save cropped prediction boxes
         nosave = False  # do not save images/videos
         classes = None  # filter by class: --class 0, or --class 0 2 3
         agnostic_nms = False  # class-agnostic NMS
@@ -299,6 +302,25 @@ class MainWindow(QTabWidget):
                                 c = int(cls)  # integer class
                                 label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
                                 annotator.box_label(xyxy, label, color=colors(c, True))
+                                x1 = int(xyxy[0].item())
+                                y1 = int(xyxy[1].item())
+                                x2 = int(xyxy[2].item())
+                                y2 = int(xyxy[3].item())
+                                class_index = cls  # 获取属性
+                                object_name = names[int(cls)]
+                                #print('bounding box is', x1, y1, x2, y2)  # 打印坐标
+                                #print('class index is', class_index.item())  #打印属性
+                                #print('object_names is', object_name)  #打印标签名字
+                                if class_index.item() == 1.0:
+                                    cropped_img = imc[y1:y2, x1:x2]
+                                    rgb_img = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
+                                    rgb_data = rgb_img.reshape((-1, 3))  # 将图像转换为一维数组
+                                    kmeans = KMeans(n_clusters=2)  # 对数据进行预处理和特征提取
+                                    kmeans.fit(rgb_data)
+                                    yanses = np.array(kmeans.cluster_centers_, dtype='int')  # 取出聚类中心，作为颜色识别结果
+                                    for yanse in yanses:
+                                        print(yanse)
+                                    #QMessageBox.warning(self, "结果", f"{colors[0]}")'''
                     LOGGER.info(f'{s}Done. ({t3 - t2:.3f}s)')
                     im0 = annotator.result()
                     resize_scale = output_size / im0.shape[0]
@@ -418,6 +440,24 @@ class MainWindow(QTabWidget):
                             c = int(cls)  # integer class
                             label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
                             annotator.box_label(xyxy, label, color=colors(c, True))
+                            x1 = int(xyxy[0].item())
+                            y1 = int(xyxy[1].item())
+                            x2 = int(xyxy[2].item())
+                            y2 = int(xyxy[3].item())
+                            class_index = cls  # 获取属性
+                            object_name = names[int(cls)]
+                            #print('bounding box is', x1, y1, x2, y2)  # 打印坐标
+                            #print('class index is', class_index.item())  # 打印属性
+                            #print('object_names is', object_name)  # 打印标签名字
+                            if class_index.item() == 1.0:
+                                cropped_img = imc[y1:y2, x1:x2]
+                                rgb_img = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
+                                rgb_data = rgb_img.reshape((-1, 3))  # 将图像转换为一维数组
+                                kmeans = KMeans(n_clusters=2)  # 对数据进行预处理和特征提取
+                                kmeans.fit(rgb_data)
+                                yanses = np.array(kmeans.cluster_centers_, dtype='int')  # 取出聚类中心，作为颜色识别结果
+                                for yanse in yanses:
+                                    print(yanse)
                 LOGGER.info(f'{s}Done. ({t3 - t2:.3f}s)')
                 im0 = annotator.result()
                 frame = im0

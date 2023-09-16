@@ -31,7 +31,9 @@ seaborn>=0.11.0
 # pycocotools>=2.0  # COCO mAP
 # roboflow
 # thop  # FLOPs computation
-pyqt5
+pyqt5~=5.15.9
 flatbuffers
 Pillow==8.4.0
 nvitop
+
+torchvision~=0.11.1
