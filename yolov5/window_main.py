@@ -1,12 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
--------------------------------------------------
-Project Name: yolov5
-File Name: window.py.py
-Author: 肆十二
-Description：图形化界面，可以检测摄像头、视频和图片文件
--------------------------------------------------
-"""
 
 # 导入库
 import shutil
@@ -34,9 +26,9 @@ class MainWindow(QTabWidget):
     def __init__(self):
         # 初始化界面
         super().__init__()
-        self.setWindowTitle('Target detection system')
+        self.setWindowTitle('汽车内饰出厂检测系统')
         self.resize(1200, 800)
-        self.setWindowIcon(QIcon("images/UI/lufei.png"))
+        self.setWindowIcon(QIcon("images/UI/junction.jpg"))
         self.output_size = 480
         self.img2predict = ""
         self.device = '0'
@@ -171,15 +163,15 @@ class MainWindow(QTabWidget):
         # 主页面
         about_widget = QWidget()
         about_layout = QVBoxLayout()
-        about_title = QLabel('欢迎使用基于YOLOV5的目标检测系统\n'
-                             '（99调试大礼包加Q: 3045834499）')  # todo 修改欢迎词语
+        about_title = QLabel('欢迎使用基于YOLOv5的汽车内饰出厂检测系统demo\n'
+                             '仅用于Junction China 2023')  # todo 修改欢迎词语
         about_title.setFont(QFont('楷体', 18))
         about_title.setAlignment(Qt.AlignCenter)
         about_img = QLabel()
-        about_img.setPixmap(QPixmap('images/UI/zhu.jpg'))
+        about_img.setPixmap(QPixmap('images/UI/waifu.png'))
         about_img.setAlignment(Qt.AlignCenter)
         label_super = QLabel()  # todo 更换作者信息
-        label_super.setText("<a href='https://blog.csdn.net/ECHOSON'>找到我-->肆十二</a>")
+        label_super.setText("<a href='https://github.com/BromineBr/JunctionChina2023'>Github</a>")
         label_super.setFont(QFont('楷体', 16))
         label_super.setOpenExternalLinks(True)
         label_super.setAlignment(Qt.AlignRight)
@@ -195,9 +187,9 @@ class MainWindow(QTabWidget):
         self.addTab(img_detection_widget, '图片检测')
         self.addTab(vid_detection_widget, '视频检测')
 
-        self.setTabIcon(0, QIcon('images/UI/lufei.png'))
-        self.setTabIcon(1, QIcon('images/UI/lufei.png'))
-        self.setTabIcon(2, QIcon('images/UI/lufei.png'))
+        self.setTabIcon(0, QIcon('images/UI/junction.jpg'))
+        self.setTabIcon(1, QIcon('images/UI/junction.jpg'))
+        self.setTabIcon(2, QIcon('images/UI/junction.jpg'))
 
     # 图片上传
     def upload_img(self):
@@ -319,7 +311,7 @@ class MainWindow(QTabWidget):
         self.webcam_detection_btn.setEnabled(False)
         self.mp4_detection_btn.setEnabled(False)
         self.vid_stop_btn.setEnabled(True)
-        self.vid_source = '0'
+        self.vid_source = '1'
         self.webcam = True
         th = threading.Thread(target=self.detect_vid)
         th.start()
