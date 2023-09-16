@@ -39,13 +39,13 @@ class MainWindow(QTabWidget):
         self.setWindowIcon(QIcon("images/UI/lufei.png"))
         self.output_size = 480
         self.img2predict = ""
-        self.device = 'cpu'
+        self.device = '0'
         self.init_vid_id = '0'
         self.vid_source = self.init_vid_id
         self.stopEvent = threading.Event()
         self.webcam = True
         self.stopEvent.clear()
-        self.model = self.model_load(weights="runs/train/exps/weights/best.pt",
+        self.model = self.model_load(weights="runs/train/exp9/weights/best.pt",
                                      device=self.device)  # todo 指明模型加载的位置的设备
         self.conf_thres = 0.25  # confidence threshold
         self.iou_thres = 0.45  # NMS IOU thresholdv
@@ -61,11 +61,11 @@ class MainWindow(QTabWidget):
                    dnn=False,  # use OpenCV DNN for ONNX inference
                    ):
         device = select_device(device)
-        half &= device.type != 'cpu'  # half precision only supported on CUDA
+        half &= device.type != '0'  # half precision only supported on CUDA
         model = DetectMultiBackend(weights, device=device, dnn=dnn)
         stride, names, pt, jit, onnx = model.stride, model.names, model.pt, model.jit, model.onnx
         # Half
-        half &= pt and device.type != 'cpu'  # half precision only supported by PyTorch on CUDA
+        half &= pt and device.type != '0'  # half precision only supported by PyTorch on CUDA
         if pt:
             model.model.half() if half else model.model.float()
         # print(model.onnx)
@@ -260,7 +260,7 @@ class MainWindow(QTabWidget):
                 bs = 1  # batch_size
             vid_path, vid_writer = [None] * bs, [None] * bs
             # Run inference
-            if pt and device.type != 'cpu':
+            if pt and device.type != '0':
                 model(torch.zeros(1, 3, *imgsz).to(device).type_as(next(model.model.parameters())))  # warmup
             dt, seen = [0.0, 0.0, 0.0], 0
             for path, im, im0s, vid_cap, s in dataset:
@@ -377,7 +377,7 @@ class MainWindow(QTabWidget):
             bs = 1  # batch_size
         vid_path, vid_writer = [None] * bs, [None] * bs
         # Run inference
-        if pt and device.type != 'cpu':
+        if pt and device.type != '0':
             model(torch.zeros(1, 3, *imgsz).to(device).type_as(next(model.model.parameters())))  # warmup
         dt, seen = [0.0, 0.0, 0.0], 0
         for path, im, im0s, vid_cap, s in self.dataset:
