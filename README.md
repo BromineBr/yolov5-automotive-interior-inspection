@@ -116,5 +116,5 @@ pip install pillow==8.4.0
 
 
 
-
-
+![](https://github.com/BromineBr/JunctionChina2023/blob/main/images/UI/waifu.png)
+Produced by Bromine_Br & Hina Kagiyama
