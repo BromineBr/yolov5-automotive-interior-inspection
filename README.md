@@ -24,6 +24,8 @@ conda create -n yolo python==3.8.5
 conda activate yolo
 ```
 
+
+
 PyTorch安装
 
 ```
@@ -31,6 +33,8 @@ conda install pytorch==1.10.0 torchvision torchaudio cudatoolkit=11.3 # 30系列
 conda install pytorch==1.8.0 torchvision torchaudio cudatoolkit=10.2 # 10系和20系以及mx系列的执行这条
 conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cpuonly # CPU直接执行这条命令即可
 ```
+
+
 
 安装依赖
 
@@ -42,6 +46,24 @@ pip install -r requirements.txt
 
 ### 训练模型
 
+安装labelimg
+
+```
+pip install labelimg
+```
+
+
+
+运行labelimg，对图片打标签
+
+```
+labelimg
+```
+
+注意修改label保存路径，同时，**输出格式应当改为YOLO格式**。
+
+
+
 修改配置文件`my_data.yaml`
 
 ```
@@ -52,6 +74,8 @@ nc: 2  #类的数目
 
 names: ['wheel', 'panel']  #类名
 ```
+
+
 
 运行指令
 
@@ -86,6 +110,8 @@ self.model = self.model_load(weights="runs/train/exp9/weights/best.pt",
 ```
 pip install pillow==8.4.0
 ```
+
+
 
 若numpy报错`module 'numpy' has no attribute 'int'`，请降低numpy的版本
 

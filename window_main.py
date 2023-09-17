@@ -174,7 +174,7 @@ class MainWindow(QTabWidget):
         about_img.setPixmap(QPixmap('images/UI/waifu.png'))
         about_img.setAlignment(Qt.AlignCenter)
         label_super = QLabel()  # todo 更换作者信息
-        label_super.setText("<a href='https://github.com/BromineBr/JunctionChina2023'>Github</a>")
+        label_super.setText("<a href='https://github.com/BromineBr/yolov5-automotive-interior-inspection'>Github</a>")
         label_super.setFont(QFont('楷体', 16))
         label_super.setOpenExternalLinks(True)
         label_super.setAlignment(Qt.AlignRight)
