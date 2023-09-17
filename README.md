@@ -108,7 +108,7 @@ pip install pillow==8.4.0
 
 
 
-## 参考代码及数据集使用
+## 引用
 
 1. Ultralytics, yolov5, https://github.com/ultralytics/yolov5
 2. 肆十二, YOLOV5-sfid, https://gitee.com/song-laogou/yolov5-sfid
