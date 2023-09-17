@@ -1,4 +1,4 @@
-# JunctionChina2023-基于深度学习的汽车内饰出厂检测
+# JunctionChina2023-基于深度学习的汽车内饰出厂检测demo
 
 
 
@@ -134,7 +134,7 @@ pip install pillow==8.4.0
 
 
 
-## 参考代码及数据集使用
+## 引用
 
 1. Ultralytics, yolov5, https://github.com/ultralytics/yolov5
 2. 肆十二, YOLOV5-sfid, https://gitee.com/song-laogou/yolov5-sfid
@@ -142,5 +142,6 @@ pip install pillow==8.4.0
 
 
 
+![](https://github.com/BromineBr/JunctionChina2023/blob/main/images/UI/waifu.png)
 
-
+Produced by Bromine_Br & Hina Kagiyama
