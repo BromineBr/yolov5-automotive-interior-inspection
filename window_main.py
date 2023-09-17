@@ -318,6 +318,7 @@ class MainWindow(QTabWidget):
                                     kmeans = KMeans(n_clusters=2)  # 对数据进行预处理和特征提取
                                     kmeans.fit(rgb_data)
                                     yanses = np.array(kmeans.cluster_centers_, dtype='int')  # 取出聚类中心，作为颜色识别结果
+                                    print("Two main colors are (RGB)")
                                     for yanse in yanses:
                                         print(yanse)
                                     #QMessageBox.warning(self, "结果", f"{colors[0]}")'''
@@ -456,6 +457,7 @@ class MainWindow(QTabWidget):
                                 kmeans = KMeans(n_clusters=2)  # 对数据进行预处理和特征提取
                                 kmeans.fit(rgb_data)
                                 yanses = np.array(kmeans.cluster_centers_, dtype='int')  # 取出聚类中心，作为颜色识别结果
+                                print("Two main colors are (RGB)")
                                 for yanse in yanses:
                                     print(yanse)
                 LOGGER.info(f'{s}Done. ({t3 - t2:.3f}s)')
