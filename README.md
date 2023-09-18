@@ -1,23 +1,23 @@
-# 基于深度学习的汽车内饰出厂检测demo
+# A demonstration of automotive interior inspection based on yolov5
 
 
 
-## 技术方案
+## Technical Program
 
-1. 利用YOLOv5训练目标检测模型（方向盘、副驾驶前盖板），对图片/视频抽帧进行目标检测及Box crop。
+1. YOLOv5 is utilized to train the target detection model (steering wheel, passenger front flap) for target detection and box crop for image or video frame extraction.
 
-2. 对crop的部分转化为RGB格式，再转化成数组后进行K-Means聚类，从而确定该区域内的主要颜色。
+2. The box crop is converted to RGB format and then converted to an array, and then, K-Means clustering is performed to determine the predominant color within the region.
 
-3. 将该颜色同正确颜色做对比，输出结果。
-
-
+3. Compare the color with the correct color and output the result.
 
 
-## 项目部署
 
-### 环境配置
 
-创建虚拟环境
+## Project deployment
+
+### Environment Configuration
+
+Creating the virtual environment
 
 ```
 conda create -n yolo python==3.8.5
@@ -26,17 +26,17 @@ conda activate yolo
 
 
 
-PyTorch安装
+Install `PyTorch`
 
 ```
-conda install pytorch==1.10.0 torchvision torchaudio cudatoolkit=11.3 # 30系列以上显卡gpu版本pytorch安装指令
-conda install pytorch==1.8.0 torchvision torchaudio cudatoolkit=10.2 # 10系和20系以及mx系列的执行这条
-conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cpuonly # CPU直接执行这条命令即可
+conda install pytorch==1.10.0 torchvision torchaudio cudatoolkit=11.3 # For 30 series or higher gpu
+conda install pytorch==1.8.0 torchvision torchaudio cudatoolkit=10.2 # For 10/20/mx series
+conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cpuonly # For cpu
 ```
 
 
 
-安装依赖
+Install requirements
 
 ```
 pip install -r requirements.txt
@@ -44,9 +44,9 @@ pip install -r requirements.txt
 
 
 
-### 训练模型
+### Model Training
 
-安装labelimg
+Install `labelimg`
 
 ```
 pip install labelimg
@@ -54,58 +54,58 @@ pip install labelimg
 
 
 
-运行labelimg，对图片打标签
+Run `labelimg` to label the image
 
 ```
 labelimg
 ```
 
-注意修改label保存路径，同时，**输出格式应当改为YOLO格式**。
+Note that the label save path is modified, and also that the **output format should be changed to YOLO format**.
 
 
 
-修改配置文件`my_data.yaml`
+Modify the configuration file `my_data.yaml`
 
 ```
-train: ./datasets/images/train/  #训练集地址
-val: ./datasets/images/test/  #测试集、验证集地址
+train: ./datasets/images/train/  # Path of the training set
+val: ./datasets/images/test/  # Path of the test set
 
-nc: 2  #类的数目
+nc: 2  # Number of classes
 
-names: ['wheel', 'panel']  #类名
+names: ['wheel', 'panel']  # Names of classes
 ```
 
 
 
-运行指令
+Run command
 
 ```
 python train.py --data my_data.yaml --cfg yolov5s.yaml --weights pretrained/yolov5s.pt --epoch 50 --batch-size 4
 ```
 
-结果将保存在`./runs/train`中
+The results will be saved in `./runs/train`
 
 
 
-### 使用已有模型进行预测
+### Prediction using the model
 
-修改`window_main.py`的`line 43`
+Modify the `line 43 `in `window_main.py`
 
 ```
 self.model = self.model_load(weights="runs/train/exp9/weights/best.pt",
 ```
 
-改为想要使用的模型，weights文件夹中的`best.pt`和`last.pt`分别为训练中的最佳模型和最后一个epoch的模型
+Change it to the path of the model you want to use, the `best.pt` and `last.pt` in the weights folder are the best model in training and the last epoch model respectively
 
 
 
-执行`window_main.py`
+Run `window_main.py`
 
 
 
-### 注意事项
+### Precaution
 
-若读图有问题，请将pillow版本降至8.4.0
+If you have problems reading the pictures, please downgrade the pillow version to 8.4.0.
 
 ```
 pip install pillow==8.4.0
@@ -113,32 +113,33 @@ pip install pillow==8.4.0
 
 
 
-若numpy报错`module 'numpy' has no attribute 'int'`，请降低numpy的版本
+If `numpy` reports an error `module 'numpy' has no attribute 'int'`, please downgrade the version of numpy.
 
 
 
-## 问题及改进方向
+## Problems and directions for improvement
 
-- 因为数据集过小，并且数据集中的照片车型不同，光线和色温也有差异，因此导致检测准确率低。
+- Because the dataset is too small and because the photos in the dataset have different models and vary in light and color temperature, it may results in low detection accuracy.
 
-- 实际使用中光线固定和色温固定、车型固定，且数据量更大，跑出来的模型会更准确。
-- 可添加纠错功能，在初期使用过程中如果出错，可以人工矫正，这可以进一步训练模型，使模型在使用中更加准确。
-
-
-
-## 注意事项
-
-- 实际模型训练过程中，应注意从多角度拍摄照片。
-
-- 实际拍摄过程中，应注意虚化问题。
+- Practical use with fixed light and color temperatures, fixed models, and a larger amount of data will run a more accurate model.
+- Error correction can be added so that if an error is made during early use, it can be corrected manually, which can further train the model and make it more accurate in use.
 
 
 
-## 引用
+## NOTE
 
-1. Ultralytics, yolov5, https://github.com/ultralytics/yolov5
-2. 肆十二, YOLOV5-sfid, https://gitee.com/song-laogou/yolov5-sfid
-3. 数据集使用：BEHNAM HASANBEYGI, Persian Car Interior Design, https://www.kaggle.com/datasets/behnamhasanbeygi/persian-car-interior-design
+- During the actual model training process, attention should be paid to taking photos from multiple angles.
+
+- During the actual shooting process, attention should be paid to the issue of blurring.
+
+
+
+
+## Reference
+
+1. yolov5, https://github.com/ultralytics/yolov5
+2. YOLOV5-sfid, https://gitee.com/song-laogou/yolov5-sfid
+3. Dataset: Persian Car Interior Design, https://www.kaggle.com/datasets/behnamhasanbeygi/persian-car-interior-design
 
 
 
