@@ -31,7 +31,7 @@ class MainWindow(QTabWidget):
         super().__init__()
         self.setWindowTitle('汽车内饰出厂检测系统')
         self.resize(1200, 800)
-        self.setWindowIcon(QIcon("images/UI/junction.jpg"))
+        self.setWindowIcon(QIcon("images/UI/icon.jpg"))
         self.output_size = 480
         self.img2predict = ""
         self.device = '0'
@@ -190,9 +190,9 @@ class MainWindow(QTabWidget):
         self.addTab(img_detection_widget, '图片检测')
         self.addTab(vid_detection_widget, '视频检测')
 
-        self.setTabIcon(0, QIcon('images/UI/junction.jpg'))
-        self.setTabIcon(1, QIcon('images/UI/junction.jpg'))
-        self.setTabIcon(2, QIcon('images/UI/junction.jpg'))
+        self.setTabIcon(0, QIcon('images/UI/icon.jpg'))
+        self.setTabIcon(1, QIcon('images/UI/icon.jpg'))
+        self.setTabIcon(2, QIcon('images/UI/icon.jpg'))
 
     # 图片上传
     def upload_img(self):
